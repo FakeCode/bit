@@ -3,8 +3,10 @@ import { GraphqlAspect } from '@teambit/graphql';
 import { Slot, SlotRegistry } from '@teambit/harmony';
 import type { ReactRouterUI } from '@teambit/react-router';
 import { ReactRouterAspect } from '@teambit/react-router';
+import { Button } from '@teambit/evangelist.elements.button';
 import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
+import Avatar, { AccountTypes } from '@teambit/staged-components.workspace-components.avatar';
 
 import { Compose } from './compose';
 import { UIRootFactory } from './ui-root.ui';
@@ -23,6 +25,43 @@ type ContextType = React.JSXElementConstructor<React.PropsWithChildren<any>>;
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 // serviceWorker.unregister();
+
+function TempHeader() {
+  const isIframed = typeof window !== 'undefined' && window.top !== window;
+
+  if (isIframed) return null;
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', padding: 8 }}>
+      <Avatar
+        account={{
+          name: '',
+          profileImage: 'https://static.bit.dev/bit-logo.svg',
+          accountType: AccountTypes.user,
+        }}
+        size={35}
+        // style={{marginRight: 8}}
+      />
+      <input placeholder="search for components" style={{ marginRight: 'auto', marginLeft: 8 }} />
+      <a href="https://dev.bit.dev/pricing" style={{ padding: 8 }}>
+        pricing
+      </a>
+      <a href="https://dev.bit.dev/~create-collection" style={{ marginRight: '16px' }}>
+        <Button importance="cta" style={{ padding: '8px 16px' }}>
+          + New
+        </Button>
+      </a>
+      <Avatar
+        account={{
+          name: 'kutner',
+          profileImage: 'https://s.gravatar.com/avatar/18753b52208563aa388239347f22c721?rating=g&default=blank',
+          accountType: AccountTypes.user,
+        }}
+        size={35}
+      ></Avatar>
+    </div>
+  );
+}
 
 /**
  * extension
@@ -61,6 +100,7 @@ export class UiUI {
       <GraphqlProvider>
         <ClientContext>
           <Compose components={contexts}>
+            <TempHeader />
             {hudItems}
             {routes}
           </Compose>

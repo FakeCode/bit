@@ -1,5 +1,5 @@
 import { ComponentModel } from '@teambit/component';
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, createRef, useEffect, useState } from 'react';
 
 export type ComponentPreviewProps = {
   /**
@@ -32,13 +32,32 @@ export type ComponentPreviewProps = {
  * renders a preview of a component.
  */
 export function ComponentPreview({ component, style, previewName, queryParams }: ComponentPreviewProps) {
+  // const iframeRef = createRef<HTMLIFrameElement>();
+
   const serverUrl = `/api/${component.id.fullName}/@/preview`;
 
   const url = `${(component.server && component.server.url) || serverUrl}/#${component.id.fullName}${
     `?preview=${previewName}&${queryParams && queryParams}` || ''
   }`;
 
-  return <iframe style={style} src={url} />;
+  // const [urlState, setUrl] = useState(url);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     const next = 'https://google.com';
+  //     setUrl(next);
+  //     // '/preview/teambit.bit/react/#elements/image?preview=overview';
+  //     // if (!iframeRef.current) return;
+
+  //     // console.log('done v5');
+
+  //     // iframeRef.current.contentWindow?.history.replaceState(null, 'iframe', next);
+  //   }, 10000);
+  // }, [iframeRef]);
+
+  // return <div>(iframe placeholder)</div>
+  return <iframe /* ref={iframeRef} */ style={style} src={url} />;
+  // return null;
 }
 
 ComponentPreview.defaultProps = {

@@ -17,3 +17,12 @@ export function DocsApp({ Provider, docs, componentId, compositions }: DocsAppPr
     </Provider>
   );
 }
+
+window.addEventListener('hashchange', (e) => {
+  console.log('[docs]', 'hash changed', e);
+});
+
+window.addEventListener('popstate', (e) => {
+  e.preventDefault();
+  console.log('[docs]', 'popstate', e);
+});

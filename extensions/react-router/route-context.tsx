@@ -19,19 +19,21 @@ export function RouteContext({
 }) {
   const [currentLocation, setLocation] = useState(window.location.pathname);
 
+  // TODO - remove
   useEffect(() => {
     const unregister = setInterval(() => {
+      if (currentLocation === window.location.pathname) return;
       setLocation(window.location.pathname);
-    }, 500);
+    }, 100);
 
     return () => {
       clearInterval(unregister);
     };
-  }, []);
+  }, [currentLocation]);
 
   return (
     <Router>
-      <div>{currentLocation}</div>
+      <div>(DEV - harmony url: {currentLocation})</div>
       <RouterGetter onRouter={reactRouterUi.setRouter} />
       <SlotRouter slot={routeSlot} rootRoutes={rootRoutes} />
     </Router>
